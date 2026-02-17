@@ -1,7 +1,7 @@
 import whisper
 import json
 
-model = whisper.load_model("small")
+model = whisper.load_model("small") # large-v2
 
 result = model.transcribe(audio="audios/13_Entities, Code tag and more on HTML.mp3",
                           language="hi",
