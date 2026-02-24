@@ -1,7 +1,10 @@
 import requests
 import os
 import json
+import joblib
 import pandas as pd
+import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity
 
 def create_embeddings(text_list):
     r = requests.post("http://localhost:11434/api/embed", json={
@@ -28,10 +31,10 @@ for json_file in jsons:
         chunk["embedding"] = embeddings[i]
         chunk_id +=1
         my_dict.append(chunk)
+    break
 
 # print(my_dict)
 
 df = pd.DataFrame.from_records(my_dict)
-print(df)
-# a = create_embeddings(["hello world", "how are you?"])
-# print(a)
+# Save this DataFrame
+joblib.dump(df, "embeddings.joblib")
