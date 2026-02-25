@@ -3,6 +3,10 @@ import numpy as np
 import requests
 from sklearn.metrics.pairwise import cosine_similarity
 import joblib
+from google import genai
+from config import api_key
+
+client = genai.Client(api_key=api_key)
 
 def create_embeddings(text_list):
     r = requests.post("http://localhost:11434/api/embed", json={
@@ -25,6 +29,15 @@ def inference(prompt):
     print(response)
     return response
     
+def inference_genai(prompt):
+
+    response = client.models.generate_content(
+        model="gemini-3-flash-preview",
+        contents=prompt,
+    )
+    
+    return response.text
+
 df = joblib.load("embeddings.joblib")
 
 incoming_query = input("Ask a question: ")
@@ -55,10 +68,13 @@ If user asks unrelated question, tell him that you can only answer questions rel
 with open("prompt.txt", "w") as f:
     f.write(prompt)
 
-response = inference(prompt)['response']
-print(response)
+# response = inference(prompt)['response']
+# print(response)
+
+response = inference_genai(prompt)
 
 with open("response.txt", "w") as f:
     f.write(response)
+    
 # for index, item in new_df.iterrows():
 #     print(index, item['title'], item['number'], item['text'],item['start'], item['end'])
