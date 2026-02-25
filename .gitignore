@@ -3,3 +3,4 @@
 /jsons(small)
 __pycache__
 config.py
+.vscode
