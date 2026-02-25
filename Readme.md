@@ -1,37 +1,52 @@
 # 🎓 AI Teaching Assistant (RAG-Based)
 
-An intelligent, Retrieval-Augmented Generation (RAG) powered teaching assistant that can answer questions based on your own video course content. It transcribes video lectures, indexes them into a vector database, and uses an LLM to provide context-aware answers with specific timestamps.
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue?logo=python&logoColor=white)](https://www.python.org/)
+[![Ollama](https://img.shields.io/badge/Ollama-Local%20LLM-orange)](https://ollama.com/)
+[![Google Gemini](https://img.shields.io/badge/Google%20Gemini-v1.5-blue)](https://ai.google.dev/)
+[![Whisper](https://img.shields.io/badge/OpenAI-Whisper-green)](https://github.com/openai/whisper)
+
+An intelligent, **Retrieval-Augmented Generation (RAG)** powered teaching assistant designed to answer questions based on your specific video course content. It transcribes video lectures, indexes them into a vector database, and uses a state-of-the-art LLM to provide context-aware answers with specific timestamps.
 
 ---
 
-## 🚀 Features
+## 🚀 Key Features
 
-- **Video Transcription**: Automatically converts video content to text using OpenAI's Whisper.
-- **Context-Aware Q&A**: Employs RAG to provide accurate answers based *only* on the provided course material.
-- **Timestamp References**: Points users to the exact video and time where a concept is taught.
-- **Local LLM Integration**: Uses Ollama to run models like `llama3.2` or `deepseek-r1` locally for privacy and performance.
-- **Efficient Retrieval**: Uses `bge-m3` embeddings for high-quality semantic search.
-
----
-
-## 🛠️ Tech Stack
-
-- **Large Language Models**: [Ollama](https://ollama.com/) (`llama3.2`, `bge-m3`)
-- **Transcription**: [OpenAI Whisper](https://github.com/openai/whisper)
-- **Vector Search**: [Scikit-learn](https://scikit-learn.org/) (Cosine Similarity)
-- **Data Engineering**: `Pandas`, `Numpy`, `Joblib`
-- **Media Processing**: `FFmpeg`
-- **Language**: Python 3.x
+- 🎙️ **Video Transcription**: Automatically converts video content to text using OpenAI's Whisper (with support for translation and multilingual audio).
+- 🧠 **Context-Aware Q&A**: Employs RAG to ensure answers are strictly grounded in your provided course material.
+- 🕒 **Timestamp References**: Guides users to the exact video and timestamp where the concept is discussed.
+- 🏘️ **Flexible LLM Integration**: 
+  - **Option 1 (Cloud)**: Use **Google Gemini API** for high-quality, state-of-the-art responses.
+  - **Option 2 (Local)**: Use **Ollama** (e.g., `llama3.2`, `deepseek-r1`) for 100% private, local inference.
+- 🔍 **Efficient Search**: Utilizes `bge-m3` embeddings (via Ollama) for high-precision semantic retrieval.
 
 ---
 
 ## 📋 System Architecture
 
-1.  **Ingestion**: Videos are converted to MP3.
-2.  **Transcription**: Whisper converts MP3 to JSON with timestamps.
-3.  **Indexing**: JSON chunks are embedded using `bge-m3` and stored in a `joblib` vector store.
-4.  **Retrieval**: User queries are embedded and matched against the vector store.
-5.  **Generation**: The LLM generates a human-like response using the retrieved context.
+```mermaid
+graph TD
+    A[Raw Videos] -->|video_to_mp3.py| B(MP3 Audio)
+    B -->|mp3_to_json.py| C(Whisper Transcription)
+    C -->|preprocess_json.py| D[JSON Chunks]
+    D -->|Ollama bge-m3| E[(Vector Index - joblib)]
+    F[User Query] -->|Ollama bge-m3| G(Query Embedding)
+    G -->|Cosine Similarity| H(Context Retrieval)
+    H -->|Gemini API| I[Human-like Response]
+```
+
+---
+
+## 🛠️ Tech Stack
+
+| Component | Technology |
+| :--- | :--- |
+| **Language** | Python 3.x |
+| **Transcription** | OpenAI Whisper (`small` model) |
+| **Embeddings** | Ollama (`bge-m3`) |
+| **Generation** | Google Gemini & Ollama (`llama3.2`) |
+| **Data Handling** | Pandas, Numpy, Joblib |
+| **Similarity** | Scikit-learn (Cosine Similarity) |
+| **Media** | FFmpeg |
 
 ---
 
@@ -39,51 +54,87 @@ An intelligent, Retrieval-Augmented Generation (RAG) powered teaching assistant 
 
 ### 1. Prerequisites
 - **Python 3.8+**
-- **FFmpeg**: Installed and added to your system PATH.
-- **Ollama**: Download and install from [ollama.com](https://ollama.com/).
-- **Required Models**:
-  ```bash
-  ollama pull llama3.2
-  ollama pull bge-m3
-  ```
+- **FFmpeg**: Must be installed and added to your system PATH.
+- **Ollama**: Download from [ollama.com](https://ollama.com/).
+- **Google AI API Key**: Obtain from [Google AI Studio](https://aistudio.google.dev/).
 
-### 2. Install Dependencies
+### 2. Model Setup
 ```bash
-pip install whisper pandas numpy scikit-learn requests joblib
+ollama pull llama3.2
+ollama pull bge-m3
 ```
 
-### 3. Project Structure
-Create the following directories if they don't exist:
-- `videos/`: Place your raw video files here.
-- `audios/`: For extracted mp3 files.
-- `jsons/`: For transcriptions.
+### 3. Install Dependencies
+```bash
+pip install openai-whisper pandas numpy scikit-learn requests joblib google-genai
+```
+
+### 4. Configuration
+Create a `config.py` file in the root directory:
+```python
+api_key = "YOUR_GOOGLE_AI_API_KEY"
+```
+
+---
+
+## 📂 Project Structure
+
+```text
+.
+├── audios/               # Extracted MP3 files
+├── jsons/                # Transcriptions with timestamps
+├── videos/               # Raw video files
+├── config.py             # Configuration (API Keys)
+├── embeddings.joblib     # Precomputed vector index
+├── mp3_to_json.py        # Transcription script
+├── preprocess_json.py    # Embedding & Indexing script
+├── process_incoming.py   # Main Assistant/Query script
+├── video_to_mp3.py       # Audio extraction script
+└── Readme.md             # Project documentation
+```
 
 ---
 
 ## 📖 Usage Guide
 
-Follow these steps in order to process your data:
+Follow these steps in sequence to process your course content:
 
-### Step 1: Extract Audio
-Run the script to convert your videos to mp3:
+### 1. Extract Audio
+Place your videos in the `videos/` folder and run:
 ```bash
 python video_to_mp3.py
 ```
 
-### Step 2: Transcribe Content
-Generate JSON transcripts with timestamps:
+### 2. Takeaway Transcripts
+Convert MP3s to JSON transcripts:
 ```bash
 python mp3_to_json.py
 ```
 
-### Step 3: Create Vector Index
-Generate embeddings and save them to `embeddings.joblib`:
+### 3. Create Vector Index
+Generate embeddings and save to `embeddings.joblib`:
 ```bash
 python preprocess_json.py
 ```
 
-### Step 4: Ask Questions
-Run the assistant to query your course content:
+### 4. Start the Assistant
+Query your course content:
 ```bash
 python process_incoming.py
 ```
+
+---
+
+## ✨ Future Scope
+- [ ] **GUI Interface**: Build a web dashboard using Streamlit or React.
+- [ ] **Multi-format Support**: Support for PDFs and local text documents.
+- [ ] **Advanced Chunking**: Improve retrieval precision with semantic chunking.
+- [ ] **Real-time Transcription**: Process live video streams.
+
+---
+
+## 🤝 Contributing
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 License
+This project is licensed under the MIT License - see the LICENSE file for details.
