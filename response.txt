@@ -1,9 +1,9 @@
-So, you want to know when CSS basics are covered in our course.
+You can find the explanation for the `<code>` and `<pre>` tags in **Video #13**, titled **"Entities, Code tag and more on HTML."**
 
-CSS basics are actually covered twice in different videos!
+Here is a quick guide on where to look:
 
-In Video 2 (at timestamp: 850.44 seconds), we briefly mention the basics of CSS right after explaining how I will teach you CSS.
+*   **The `<pre>` tag:** The discussion begins around the **2:31** mark (151 seconds), where I explain how to use the pre tag to preserve formatting. I also revisit its usage at **3:05** (184 seconds).
+*   **The `<code>` tag:** I introduce and demonstrate the code tag starting at **5:47** (347 seconds).
+*   **Combined Usage:** At the **6:23** mark (383 seconds), I show how you can use both the code and pre tags together to display blocks of code effectively.
 
-However, a more detailed explanation of CSS basics is found in Video 1, when it says "we will learn html, css, javascript" at the end, around 1514.24 seconds into that video.
-
-So, if you want to dive deeper into CSS basics, check out Video 2 (the one with the number 2) and look for the timestamp around 850.44 seconds!
+I recommend heading over to Video #13 to see these tags in action! Let me know if you have any other questions about the course material.
