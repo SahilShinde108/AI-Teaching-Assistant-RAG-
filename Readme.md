@@ -122,7 +122,6 @@ Query your course content:
 ```bash
 python process_incoming.py
 ```
-
 ---
 
 ## ✨ Future Scope
@@ -135,6 +134,3 @@ python process_incoming.py
 
 ## 🤝 Contributing
 Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📄 License
-This project is licensed under the MIT License - see the LICENSE file for details.
