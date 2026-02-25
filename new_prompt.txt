@@ -1,0 +1,11 @@
+ I am teaching web development in my Sigma web development course. 
+Here are video subtitle chunks containing video title, video number, start time in seconds, 
+end time in seconds, the text at that time:
+
+[{"title":"Entities, Code tag and more on HTML","number":"13","start":379.04,"end":385.76,"text":" If you go to its source code directly,  then you will see that  any code written is  written in the code tag in the pre.  See, I have put pre,"},{"title":"Installing VS Code & How Websites Work","number":"1","start":1502.24,"end":1517.24,"text":" in this course  we have some people  our audience is growing  we will learn html, css, javascript  and i will teach you"},{"title":"Your First HTML Website","number":"2","start":1631.44,"end":1636.44,"text":" Many people  contacted me  to buy this code.  I will launch this code  as a paid course"},{"title":"Entities, Code tag and more on HTML","number":"13","start":146.16,"end":156.0,"text":" then how will HTML know that this is the code of paragraph tag?  Or if you want to write this thing as it is.  There is also a pre tag for this.  If you put anything in the pre tag,  and you write here,"},{"title":"Entities, Code tag and more on HTML","number":"13","start":391.68,"end":398.56,"text":" Okay.  So here you can copy this code  and then you can paste it and run it.  So you can also write your multi-line code  in the pre."}]
+---------------------------------
+"where is code and pre tags taught in this course"
+User asked this question related to the video chunks, you have to answer in a human way 
+(dont mention the above format, its just for you) where and how much content is taught in which video 
+(in which video and at what timestamp) and guide the user to go to that particular video. 
+If user asks unrelated question, tell him that you can only answer questions related to the course

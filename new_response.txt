@@ -1,0 +1,8 @@
+In our Sigma Web Development Course, the `<pre>` and `<code>` tags are covered in detail in **Video #13**, titled **"Entities, Code tag and more on HTML."**
+
+Here is a breakdown of what you'll find in that video:
+
+*   **At 02:26 (146 seconds):** I introduce the `<pre>` tag. I explain how to use it when you want to write HTML code (like a paragraph tag) as literal text on your webpage without the browser actually executing it.
+*   **At 06:19 (379 seconds):** I show how the `<code>` tag is often used inside the `<pre>` tag. I demonstrate how this combination is perfect for displaying multi-line code blocks that users can easily read or copy.
+
+I recommend heading over to **Video #13** to see these examples in action and learn how to properly format your code snippets!
