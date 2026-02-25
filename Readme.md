@@ -31,7 +31,7 @@ graph TD
     D -->|Ollama bge-m3| E[(Vector Index - joblib)]
     F[User Query] -->|Ollama bge-m3| G(Query Embedding)
     G -->|Cosine Similarity| H(Context Retrieval)
-    H -->|Gemini API| I[Human-like Response]
+    H -->|Gemini API / Ollama model| I[Human-like Response]
 ```
 
 ---
